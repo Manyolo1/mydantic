@@ -11,49 +11,31 @@ mydantic is a small, dependency-light Python library for defining typed data mod
 - Per-field validators (callables)
 - Structured error reporting via `FieldError` and `ValidationError`
 
-## Installation
 
-From source (development install):
-
-```bash
-# from repository root
-pip install -e .
-```
-
-Or install dependencies listed in `requirements.txt` (if present):
-
-```bash
-pip install -r requirements.txt
-```
 
 ## Quick start
 
 Define models using field descriptors. Fields are descriptors so they validate/coerce on assignment and during model initialization.
 
 ```py
-from product import BaseModel, StringField, IntField, ModelField, ListField, ValidationError
+from product import BaseModel, StringField, IntField, ListField, ModelField
 
 class Address(BaseModel):
     street = StringField()
     city = StringField()
-    zip = IntField()
 
 class User(BaseModel):
     name = StringField()
     age = IntField()
     address = ModelField(Address)
-    tags = ListField(str, default=list)
+    tags = ListField(item_type=str, default=[])
 
-# create a model (nested dicts for nested models are accepted)
-try:
-    u = User(name="Alice", age="30", address={"street":"1 Main St","city":"Town","zip":12345}, tags=("dev","python"))
-    print(u)
-    print(u.dict())
-except ValidationError as e:
-    print("Validation failed:", e)
-    for err in e.errors:
-        print(err.to_dict())
+u = User(name="Manya", age="21", address={"street":"X", "city":"New Delhi"})
+print(u.dict())
+print(u.json(indent=2))
+
 ```
+<img src="demo.png" alt="demo" width="900"/>
 
 Notes:
 - `ModelField` accepts either an instance of the nested model or a `dict` to parse into the nested model.
@@ -107,16 +89,7 @@ Explore the source files (`product/fields.py`, `product/models.py`, `product/err
 - When nested `ValidationError`s occur (e.g., setting a `ModelField` with invalid nested data), errors are flattened and reported with appropriately prefixed field names.
 - `allow_none` controls whether `None` is allowed for a field. If not allowed and `None` is provided, a `ValidationError` is raised.
 
-## Python internal concepts used
 
-
-## Running quick checks
-
-You can sanity-check imports from the project root:
-
-```bash
-python -c "from product import BaseModel, StringField; print('imports ok')"
-```
 
 ## Contributing
 
@@ -126,6 +99,23 @@ Contributions are welcome. Suggested workflow:
 2. Create a branch for your change.
 3. Add tests (if applicable) and keep changes minimal and focused.
 4. Open a pull request and describe the change and rationale.
+
+---
+> manyolo. :)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
