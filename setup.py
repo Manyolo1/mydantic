@@ -10,6 +10,6 @@ class User(BaseModel):
     address = ModelField(Address)
     tags = ListField(item_type=str, default=[])
 
-u = User(name="Manya", age="25", address={"street":"X", "city":"Y"})
+u = User(name="Manya", age="21", address={"street":"X", "city":"New Delhi"})
 print(u.dict())
 print(u.json(indent=2))
