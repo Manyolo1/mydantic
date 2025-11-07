@@ -100,6 +100,7 @@ Contributions are welcome. Suggested workflow:
 3. Add tests (if applicable) and keep changes minimal and focused.
 4. Open a pull request and describe the change and rationale.
 
+This is just version 1.0, long way to go.
 ---
 > manyolo. :)
 
